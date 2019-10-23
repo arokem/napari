@@ -8,7 +8,10 @@ apprearing on each slice.
 import numpy as np
 from skimage import data
 import napari
+import dipy.data as dpd
 
+bundles = dpd.read_bundles_2_subjects()
+cst = bundles['cst.right']
 
 with napari.gui_qt():
     blobs = data.binary_blobs(
@@ -19,12 +22,12 @@ with napari.gui_qt():
     viewer.add_image(blobs.astype(float))
 
     # sample vector coord-like data
-    path = np.array([np.array([[0, 0, 0], [0, 10, 10], [0, 5, 15], [20, 5, 15],
-        [56, 70, 21], [127, 127, 127]]),
-        np.array([[0, 0, 0], [0, 10, 10], [0, 5, 15], [0, 5, 15],
-            [0, 70, 21], [0, 127, 127]])])
+    # path = np.array([np.array([[0, 0, 0], [0, 10, 10], [0, 5, 15], [20, 5, 15],
+    #     [56, 70, 21], [127, 127, 127]]),
+    #     np.array([[0, 0, 0], [0, 10, 10], [0, 5, 15], [0, 5, 15],
+    #         [0, 70, 21], [0, 127, 127]])])
 
-    print('Path', path.shape)
+    print('Path', len(cst))
     layer = viewer.add_shapes(
-        path, shape_type='path', edge_width=4, edge_color=['red', 'blue']
+        cst, shape_type='path', edge_width=4, edge_color=['red', 'blue']
     )
